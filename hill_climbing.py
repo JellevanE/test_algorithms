@@ -1,15 +1,36 @@
+import math
+import numpy as np
 from numpy import asarray, random
 
 
+
 # objective function
-def objective (x):
-    return x[0]**2.0
+# def objective (x):
+#     return x[0]**2.0 - x[0]*8 - 4*x[0]**6 + x[0]*0.4
+
+# complex objective
+def objective(x):
+    """
+    Objective function for testing stochastic hill climbing.
+
+    Args:
+        x: Input value (float).
+
+    Returns:
+        Objective function value (float).
+    """
+
+    # Define your mathematical formula
+    y = np.sin(x[0]) * np.exp(-x[0]**2 / 20)
+
+    return y
 
 
-def stochastic_hill_climbing(objective, bounds, n_iterations, step_size, tolerance = 1e-6):
+def stochastic_hill_climbing(objective, bounds, n_iterations, step_size, tolerance = 1e-7):
 
     # randomly generate initial point
     solution = bounds[:, 0] + random.rand(len(bounds)) * (bounds[:,1] - bounds[:,0])
+    print(solution)
 
     # evaluate initial point
     solution_evaluation = objective(solution)
@@ -44,10 +65,11 @@ def stochastic_hill_climbing(objective, bounds, n_iterations, step_size, toleran
 # input range, can be adjusted for more dimensional input
 bounds = asarray([[-10.0, 10.0]])
 
-# Test the algorithm with 100 iterations and a step size of 0.1
-n_iterations = 100000
+# Test the algorithm with 1000 iterations and a step size of 0.1
+n_iterations = 1000
 step_size = 0.1
 
 best_solution = stochastic_hill_climbing(objective, bounds, n_iterations, step_size)
 print('Best solution:', best_solution)
+
 
